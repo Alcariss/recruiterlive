@@ -1,0 +1,100 @@
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @company.name %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @company.client %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @company.address %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @company.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @company.longitude %>
+</p>
+
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@company.latitude}%2C#{@company.longitude}" %>
+
+<% #comment: list of contacts %>
+<div id="container">
+<% if @company.contacts.empty? %>
+	<h3>No contacts</h3>
+<% else %>	
+	<h3>Contacts for this company:</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Role</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @company.contacts.each do |k| %>
+			<tr>
+				<td><%= link_to k.full_name, k%></td>
+				<td><%= k.role%></td>
+				<td><%= k.email %></td>
+				<td><%= k.phone %></td>
+				<td><%= link_to 'Show',k %></td>
+			</tr>
+		</tbody>
+	<% end %>
+	</table>
+<% end %>
+<br>
+</div>
+
+<% #comment: notes %>
+<h2>Leave a note</h2>
+	<%= form_for([@company, Note.new]) do |f| %>
+		<%= f.text_area :content, :rows => 4 %>
+			<div class="actions">
+				<%= f.submit "Post a comment"%>
+			</div>
+	<% end %>		
+
+<div id="container">
+<% if @company.notes.empty? %>
+	<h3>No notes</h3>
+<% else %>	
+	<h3>Notes for this company:</h3>
+	<% @company.notes.reverse.each do |n| %>
+		<%= n.content%> <br> <%= n.user.email %> <br> <%= n.created_at %>
+	<% end %>
+<% end %>
+<br>
+</div>
+
+<% #comment: list of candidates %>
+<div id="container">
+<% if @company.candidates.empty? %>
+	<h3>No candidates</h3>
+<% else %>	
+	<h3>Candidates in this company:</h3>
+	<% @company.candidates.each do |c| %>
+		<%=link_to c.full_name, c %> 
+	<% end %>
+<% end %>
+<br>
+</div>
+
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>
+
