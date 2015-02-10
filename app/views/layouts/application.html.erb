@@ -14,7 +14,8 @@
 	<% end %>
 <div id="banner">
 	The Recruiter
-	
+	<% if !signed_in? %>
+	<% else %>
 	<div id="nav">
 		<div id="button">
 			<%= link_to "Home", root_path %>
@@ -32,6 +33,7 @@
 		<div id="button">
 			<%= link_to "Contacts", contacts_path %>
 		</div>
+	<% end %>
 		
 	</div>
 </div>
