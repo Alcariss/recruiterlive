@@ -1,6 +1,6 @@
 class Candidate < ActiveRecord::Base
-	#belongs_to :company
-	#has_many :comments
+	belongs_to :company
+	has_many :comments
 	
 	mount_uploader :attachment, AttachmentUploader
 	
